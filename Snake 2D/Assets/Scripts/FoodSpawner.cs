@@ -44,6 +44,7 @@ public class FoodSpawner : MonoBehaviour
             Object.Destroy(foodGameobject);
             SpawnFood();
             Debug.Log("food spawned");
+            GameHandler.AddScore();
             return true;
         }
         else
