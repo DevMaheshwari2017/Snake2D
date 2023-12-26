@@ -13,6 +13,7 @@ public class GameHandler : MonoBehaviour
     private void Awake()
     {
         instance = this;
+        score = 0;
     }
     private void Start()
     {
@@ -33,5 +34,10 @@ public class GameHandler : MonoBehaviour
     public static void AddScore()
     {
         score += 10;
+    }
+
+    public static void GameOver()
+    {
+        GameReload.GameOverpanel();
     }
 }

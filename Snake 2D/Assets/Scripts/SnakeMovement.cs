@@ -16,7 +16,8 @@ public class SnakeMovement : MonoBehaviour
         Alive,
         Dead
     }
-
+    [SerializeField]
+    GameReload gameReload;
     private State state;
     private Direction grideMoveDirection;
     private Vector2Int gridPosition;
@@ -103,9 +104,9 @@ public class SnakeMovement : MonoBehaviour
         {
            Vector2Int snakeBodyPartGridposition = snakeBodyPart.GetGridPosition();
             if (gridPosition == snakeBodyPartGridposition)
-            {
-                //game over 
+            {               
                 state = State.Dead;
+                GameHandler.GameOver();
                 Debug.Log("game over");
             }
         }
