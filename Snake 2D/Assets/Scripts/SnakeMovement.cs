@@ -104,7 +104,8 @@ public class SnakeMovement : MonoBehaviour
         {
            Vector2Int snakeBodyPartGridposition = snakeBodyPart.GetGridPosition();
             if (gridPosition == snakeBodyPartGridposition)
-            {               
+            {
+                SoundManager.PlaySound(SoundManager.Sounds.SnakeDie);
                 state = State.Dead;
                 GameHandler.GameOver();
                 Debug.Log("game over");
@@ -119,6 +120,7 @@ public class SnakeMovement : MonoBehaviour
             //setting Movingtime back to 0 we can move again with time creating a loop
             gridMoveTimer -= gridMoveTimerMax;
 
+            SoundManager.PlaySound(SoundManager.Sounds.SnakeMove);
 
             SnakeMovePosition previousSnakeMovepos = null;
             //checking if atleast have one position in the list 
@@ -155,6 +157,7 @@ public class SnakeMovement : MonoBehaviour
             bool snakeAteFood = foodSpawner.HasSnakeEatenFood(gridPosition);
             if (snakeAteFood)
             {
+                SoundManager.PlaySound(SoundManager.Sounds.SnakeEat);
                 //Snake has ate food inc body size
                 snakeSize++;
                 SpawingSnakeBody();

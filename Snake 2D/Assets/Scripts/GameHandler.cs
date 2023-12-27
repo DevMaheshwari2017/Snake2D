@@ -26,6 +26,13 @@ public class GameHandler : MonoBehaviour
         snake.Setup(levelGrid);
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            PauseGame();
+        }
+    }
     public static int GetScore()
     {
         return score;
@@ -39,5 +46,11 @@ public class GameHandler : MonoBehaviour
     public static void GameOver()
     {
         GameReload.GameOverpanel();
+    }
+
+    public static void PauseGame()
+    {
+        PauseWindow.ShowPausescreeen();
+        Time.timeScale = 0f;
     }
 }

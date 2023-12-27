@@ -18,6 +18,7 @@ public class GameReload : MonoBehaviour
     }
     public void LoadSinglepLayerMainLevel()
    {
+        SoundManager.PlaySound(SoundManager.Sounds.ButtonClicked);
         SceneManager.LoadScene(mainLevel);
    }
 
