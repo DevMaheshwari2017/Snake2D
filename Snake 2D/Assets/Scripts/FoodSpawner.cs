@@ -9,6 +9,7 @@ public class FoodSpawner : MonoBehaviour
     private int width;
     private int height;
     private SnakeMovement snake;
+    private player2Movment player2;
 
     //Giving a area where our food can spawn, setting thr grid size
     public FoodSpawner(int width, int height)
@@ -18,9 +19,10 @@ public class FoodSpawner : MonoBehaviour
         this.foods = new List<Food>();
     }
 
-    public void Setup(SnakeMovement _snake)
+    public void Setup(SnakeMovement _snake, player2Movment _player2)
     {
         this.snake = _snake;
+        this.player2 = _player2;
         SpawnFood(GameAssests.instnace.gainerFoodSprite, "gainer");
         SpawnFood(GameAssests.instnace.burnerFoodSprite, "burner");
     }
@@ -45,6 +47,7 @@ public class FoodSpawner : MonoBehaviour
     public bool HasSnakeEatenFood()
     {
         Food eatenFood = foods.FirstOrDefault(food => food.GridPos == snake.GetSnakeGridPosition());
+        //Food p2_eatenFood = foods.FirstOrDefault(food => food.GridPos ==player2.GetSnakeGridPosition());
         if (eatenFood != null)
         {
                 Object.Destroy(eatenFood.FoodGameObject);

@@ -132,7 +132,6 @@ public class PowerUps : MonoBehaviour
     {
         return isSheildActivated;
     }
-
     //setter
     private void ScorePowerUp(int s)
     {

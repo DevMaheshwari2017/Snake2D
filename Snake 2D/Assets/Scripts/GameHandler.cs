@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 public class GameHandler : MonoBehaviour
 {
     [SerializeField]
     private SnakeMovement snake;
+    [SerializeField]
+    private player2Movment player2;
     private FoodSpawner levelGrid;
     private static GameHandler instance;
     private static int score;
@@ -22,8 +24,13 @@ public class GameHandler : MonoBehaviour
         Debug.Log("new snake");
         //setting foodspawner grid size same as background
         levelGrid = new FoodSpawner(19, 19);
-        levelGrid.Setup(snake);
+        levelGrid.Setup(snake,player2);
 
+        var scene = SceneManager.GetActiveScene();
+        if(scene == SceneManager.GetSceneByBuildIndex(2))
+        {
+            
+        }
         //getting the foodspawner ref
         snake.Setup(levelGrid);
     }

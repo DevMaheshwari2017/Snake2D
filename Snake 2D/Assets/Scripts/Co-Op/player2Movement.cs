@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public class SnakeMovement : MonoBehaviour
+public class player2Movment : MonoBehaviour
 {
     private enum Direction
     {
@@ -24,7 +24,7 @@ public class SnakeMovement : MonoBehaviour
     [SerializeField]
     private PowerUps powerUps;
     [SerializeField]
-    private player2Movment player2;
+    private SnakeMovement player1;
 
 
 
@@ -46,7 +46,7 @@ public class SnakeMovement : MonoBehaviour
     private void Awake()
     {
         //default snake pos
-        gridPosition = new Vector2Int(10, 10);
+        gridPosition = new Vector2Int(5, 5);
 
         gridMoveTimerMax = 0.25f;
         gridMoveTimer = gridMoveTimerMax;
@@ -114,22 +114,22 @@ public class SnakeMovement : MonoBehaviour
         if (isProcessingInput)
             return;
 
-        if (Input.GetKeyDown(KeyCode.UpArrow) && grideMoveDirection != Direction.Down)
+        if (Input.GetKeyDown(KeyCode.W) && grideMoveDirection != Direction.Down)
         {
             grideMoveDirection = Direction.Up;
             StartInputDelay();
         }
-        else if (Input.GetKeyDown(KeyCode.DownArrow) && grideMoveDirection != Direction.Up)
+        else if (Input.GetKeyDown(KeyCode.S) && grideMoveDirection != Direction.Up)
         {
             grideMoveDirection = Direction.Down;
             StartInputDelay();
         }
-        else if (Input.GetKeyDown(KeyCode.RightArrow) && grideMoveDirection != Direction.Left)
+        else if (Input.GetKeyDown(KeyCode.D) && grideMoveDirection != Direction.Left)
         {
             grideMoveDirection = Direction.Right;
             StartInputDelay();
         }
-        else if (Input.GetKeyDown(KeyCode.LeftArrow) && grideMoveDirection != Direction.Right)
+        else if (Input.GetKeyDown(KeyCode.A) && grideMoveDirection != Direction.Right)
         {
             grideMoveDirection = Direction.Left;
             StartInputDelay();
@@ -150,7 +150,7 @@ public class SnakeMovement : MonoBehaviour
         foreach (SnakeBodyPart snakeBodyPart in snakeBodyPartList)
         {
            Vector2Int snakeBodyPartGridposition = snakeBodyPart.GetGridPosition();
-            if (gridPosition == snakeBodyPartGridposition)
+            if (gridPosition == snakeBodyPartGridposition || gridPosition == player1.GetSnakeGridPosition())
             {
                 if (powerUps.GetIsSheildPowerActivated() == false) 
                 { 
