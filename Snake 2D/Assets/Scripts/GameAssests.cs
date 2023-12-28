@@ -8,8 +8,10 @@ public class GameAssests : MonoBehaviour
 
 
     public Sprite snakeHeadSprite;
-    public Sprite foodSprite;
+    public Sprite gainerFoodSprite;
+    public Sprite burnerFoodSprite;
     public Sprite snakeBodySprite;
+    public Sprite[] powerUps;
 
     public SoundAudioClip[] soundsClipArray;
 

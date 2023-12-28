@@ -9,7 +9,8 @@ public class GameHandler : MonoBehaviour
     private FoodSpawner levelGrid;
     private static GameHandler instance;
     private static int score;
-
+    [SerializeField]
+    private static int scoreValue = 10;
     private void Awake()
     {
         instance = this;
@@ -17,6 +18,7 @@ public class GameHandler : MonoBehaviour
     }
     private void Start()
     {
+       
         Debug.Log("new snake");
         //setting foodspawner grid size same as background
         levelGrid = new FoodSpawner(19, 19);
@@ -40,9 +42,14 @@ public class GameHandler : MonoBehaviour
 
     public static void AddScore()
     {
-        score += 10;
+        score += scoreValue;
     }
 
+    public static void MinusScore()
+    {
+        if (score > 0)
+        score -= scoreValue;
+    }
     public static void GameOver()
     {
         GameReload.GameOverpanel();
@@ -52,5 +59,10 @@ public class GameHandler : MonoBehaviour
     {
         PauseWindow.ShowPausescreeen();
         Time.timeScale = 0f;
+    }
+
+    public static void SetScoreValue(int s)
+    {
+        scoreValue = s;
     }
 }

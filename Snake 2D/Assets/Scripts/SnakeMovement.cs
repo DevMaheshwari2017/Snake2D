@@ -16,15 +16,24 @@ public class SnakeMovement : MonoBehaviour
         Alive,
         Dead
     }
+    [Header("ScriptsRefrences")]
     [SerializeField]
     GameReload gameReload;
     private State state;
+    private FoodSpawner foodSpawner;
+    [SerializeField]
+    private PowerUps powerUps;
+
+
+
+
+    [Header("SnakeMovement&Size")]
     private Direction grideMoveDirection;
     private Vector2Int gridPosition;
     private float gridMoveTimer;
+    //basically speed with respect to time 
     [SerializeField]
     private float gridMoveTimerMax;
-    private FoodSpawner foodSpawner;
     private int snakeSize;
     //Store's the snake pos
     private List<SnakeMovePosition> snakeMovePosList;
@@ -51,7 +60,7 @@ public class SnakeMovement : MonoBehaviour
     {
         if (state == State.Dead)      
             return;
-        
+       
         MovementInput();
         GridMoevement();
     }
@@ -62,6 +71,38 @@ public class SnakeMovement : MonoBehaviour
         this.foodSpawner = _foodSpawner;
     }
 
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if(other.gameObject.CompareTag("PowerUp"))
+        {
+            Sprite powerUpSprite = other.gameObject.GetComponent<SpriteRenderer>().sprite;
+            if(powerUpSprite == GameAssests.instnace.powerUps[0])
+            {
+                Debug.Log("Score_PowerUp collected");
+                SoundManager.PlaySound(SoundManager.Sounds.Powerup);
+                Destroy(other.gameObject);
+                powerUps.SetscoreMultiplayer(true);
+                powerUps.SetPowerPresentInTheGame(false);
+                
+            }
+            if(powerUpSprite == GameAssests.instnace.powerUps[1])
+            {
+                Debug.Log("Sheild_PowerUp collected");
+                SoundManager.PlaySound(SoundManager.Sounds.Powerup);
+                Destroy(other.gameObject);
+                powerUps.SetSheildPowerActivated(true);
+                powerUps.SetPowerPresentInTheGame(false);
+            }
+            if(powerUpSprite == GameAssests.instnace.powerUps[2])
+            {
+                Debug.Log("Speed_PowerUp collected");
+                SoundManager.PlaySound(SoundManager.Sounds.Powerup);
+                Destroy(other.gameObject);
+                powerUps.SetSpeedPowerActivated(true);
+                powerUps.SetPowerPresentInTheGame(false);
+            }
+        }
+    }
     //Taking keyboard input 
     private void MovementInput()
     {
@@ -105,10 +146,14 @@ public class SnakeMovement : MonoBehaviour
            Vector2Int snakeBodyPartGridposition = snakeBodyPart.GetGridPosition();
             if (gridPosition == snakeBodyPartGridposition)
             {
+                if (powerUps.GetIsSheildPowerActivated() == false) 
+                { 
                 SoundManager.PlaySound(SoundManager.Sounds.SnakeDie);
                 state = State.Dead;
                 GameHandler.GameOver();
                 Debug.Log("game over");
+
+                }
             }
         }
     }
@@ -124,14 +169,14 @@ public class SnakeMovement : MonoBehaviour
 
             SnakeMovePosition previousSnakeMovepos = null;
             //checking if atleast have one position in the list 
-            if (snakeMovePosList.Count >0)
+            if (snakeMovePosList.Count > 0)
             {
                 // if so then we grab the position at the index 0 and that will become the previous position 
                 previousSnakeMovepos = snakeMovePosList[0];
             }
 
             //Updating snake pos and direction as well as previous position  
-            SnakeMovePosition snakeMovePosition = new SnakeMovePosition(gridPosition, grideMoveDirection,previousSnakeMovepos);
+            SnakeMovePosition snakeMovePosition = new SnakeMovePosition(gridPosition, grideMoveDirection, previousSnakeMovepos);
             //Instering new snake pos and dir
             snakeMovePosList.Insert(0, snakeMovePosition);
 
@@ -153,16 +198,8 @@ public class SnakeMovement : MonoBehaviour
             gridPosition = foodSpawner.ValidateGridPosition(gridPosition);
             CheckingCollision();
 
-            //passing our snake pos and checking for collison with food
-            bool snakeAteFood = foodSpawner.HasSnakeEatenFood(gridPosition);
-            if (snakeAteFood)
-            {
-                SoundManager.PlaySound(SoundManager.Sounds.SnakeEat);
-                //Snake has ate food inc body size
-                snakeSize++;
-                SpawingSnakeBody();
-            }
-
+            foodSpawner.HasSnakeEatenFood();
+            //Increase_DecreaseSnakeSize();
 
             if (snakeMovePosList.Count >= snakeSize + 1)
             {
@@ -176,15 +213,32 @@ public class SnakeMovement : MonoBehaviour
 
             UpdateSnakeBodyPart();
 
+        }        
+    }
+    public void IncreaseSnakeSize()
+    {
+            snakeSize++;
+            SpawingSnakeBody();
+    } 
+    public void DecreaseSnakeSize()
+    {
+
+        if (snakeSize > 0) // Ensure snake size is greater than 0 before decreasing
+        {
+            snakeSize--;
+            // Getting the last body part
+            SnakeBodyPart lastBodyPart = snakeBodyPartList[snakeBodyPartList.Count - 1];
+            // Removeing it from the list
+            snakeBodyPartList.RemoveAt(snakeBodyPartList.Count - 1);
+            // Destroying the corresponding GameObject
+            Destroy(lastBodyPart.GetSnakeTransform().gameObject);
         }
     }
-
     private void SpawingSnakeBody()
     {
         // creates a new instance of the class then add it to the list
         snakeBodyPartList.Add(new SnakeBodyPart(snakeBodyPartList.Count));
     }
-
     private void UpdateSnakeBodyPart()
     {
         for (int i = 0; i < snakeBodyPartList.Count; i++)
@@ -201,9 +255,27 @@ public class SnakeMovement : MonoBehaviour
         return f;
     }
 
-    public Vector2Int getGridpos()
+    //Getter
+    public Vector2Int GetSnakeGridPosition()
     {
         return gridPosition;
+    }
+    public float GetSnakeSpeed()
+    {
+        return gridMoveTimerMax;
+    }
+
+    //setter
+    public void SetSnakeSpeed(float _speed)
+    {
+        gridMoveTimerMax = _speed;
+    }
+    public bool SnakeIsAlive()
+    {
+        return state == State.Alive;
+    } public bool SnakeIsDead()
+    {
+        return state == State.Dead;
     }
 
     //returns the pos of snake head and body 
@@ -289,6 +361,11 @@ public class SnakeMovement : MonoBehaviour
         public Vector2Int GetGridPosition()
         {
             return snakeMovePosition.GetGridPosition();
+        }
+
+        public Transform GetSnakeTransform()
+        {
+            return transform;
         }
     }
 
