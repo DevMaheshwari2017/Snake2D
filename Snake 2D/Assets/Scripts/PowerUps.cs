@@ -25,6 +25,8 @@ public class PowerUps : MonoBehaviour
     private float shieldPowerTimer = 0;
     private bool isSheildActivated = false;
 
+    private IPlayerReconginaztion powerCollector;
+
     private void Start()
     {
         StartCoroutine(SpawnPowerUps());
@@ -35,6 +37,7 @@ public class PowerUps : MonoBehaviour
         ScorePowerUp();
         SpeedPowerUp();
         ShieldPowerUp();
+        
     }
     IEnumerator SpawnPowerUps()
     {
@@ -69,6 +72,49 @@ public class PowerUps : MonoBehaviour
         }
     }
 
+    //private void PowerUpsTimer()
+    //{    
+    //    timer += Time.deltaTime;
+    //}
+    //public void PowerUp(bool canPowerActivate, float powerActivationTime, string whichPowerToActivate)
+    //{
+    //    if (canPowerActivate)
+    //    {
+    //        Debug.Log("power got activated");
+    //        PowerUpsTimer();
+    //        if (timer >= powerActivationTime)
+    //        {
+    //            canPowerActivate = false;
+    //            timer = 0;
+    //            switch (whichPowerToActivate)
+    //            {
+    //                case "ScorePowerUp":
+    //                    ScorePowerUp(10);
+    //                    Debug.Log("Score powerUp Deactivated"); break;
+    //                case "SpeedPowerUp":
+    //                    snake.SetSnakeSpeed(0.25f);
+    //                    Debug.Log("Speed Power Deactivated"); break;
+    //                case "SheildpowerUp": Debug.Log("Sheild powerUp Deactivated"); break;
+    //            }
+    //        }
+        
+    //      else
+    //      {
+    //        switch (whichPowerToActivate)
+    //        {
+    //            case "ScorePowerUp":
+    //                ScorePowerUp(20);
+    //                Debug.Log("Score powerUp Activated"); break;
+    //            case "SpeedPowerUp":
+    //                snake.SetSnakeSpeed(0.125f);
+    //                Debug.Log("Speed Power Activated"); break;
+    //            case "SheildpowerUp":
+    //                snake.SnakeIsAlive();
+    //                Debug.Log("Sheild powerUp Activated"); break;
+    //        }
+    //      }
+    //    }
+    //}
     private void ScorePowerUp()
     {
         if (scoreMultiplayer)
@@ -78,12 +124,26 @@ public class PowerUps : MonoBehaviour
             {
                 scoreMultiplayer = false;
                 scorePowerTimer = 0;
-                ScorePowerUp(10);
+                if (powerCollector.GetPlayerNumber() == 1)
+                {
+                    Player1ScorePowerUp(10);
+                }
+                else if (powerCollector.GetPlayerNumber() == 2)
+                {
+                    Player2ScorePowerUp(10);
+                }
                 Debug.Log("Score powerUp Deactivate");
             }
             else
             {
-                ScorePowerUp(20);
+                if (powerCollector.GetPlayerNumber() == 1)
+                {
+                    Player1ScorePowerUp(20);
+                }
+                else if (powerCollector.GetPlayerNumber() == 2)
+                {
+                    Player2ScorePowerUp(20);
+                }
                 Debug.Log("Score powerUp Activate");
             }
         }
@@ -97,13 +157,13 @@ public class PowerUps : MonoBehaviour
             {
                 Debug.Log("Speed Power Deactivated");
                 isSpeedPowerActivated = false;
-                snake.SetSnakeSpeed(0.25f);
+                powerCollector.SetSnakeSpeed(0.25f);
                 speedPowerTimer = 0;
             }
             else
             {
                 Debug.Log("Speed PowerUp Activated");
-                snake.SetSnakeSpeed(0.125f);
+                powerCollector.SetSnakeSpeed(0.125f);
             }
         }
     }
@@ -121,33 +181,41 @@ public class PowerUps : MonoBehaviour
             }
             else
             {
-                snake.SnakeIsAlive();
+                powerCollector.SnakeIsAlive();
                 Debug.Log("Sheild powerUp Activate");
             }
         }
     }
-
+ 
     //Getter
     public bool GetIsSheildPowerActivated()
     {
         return isSheildActivated;
     }
     //setter
-    private void ScorePowerUp(int s)
+    private void Player1ScorePowerUp(int s)
     {
-        GameHandler.SetScoreValue(s);
-    }
-    public void SetscoreMultiplayer(bool CanPowerActivate)
+        GameHandler.SetPlayer1ScoreValue(s);
+    }     
+    private void Player2ScorePowerUp(int s)
+    {
+        GameHandler.SetPlayer2ScoreValue(s);
+    } 
+
+    public void SetscoreMultiplayer(bool CanPowerActivate, IPlayerReconginaztion collector)
     {
         scoreMultiplayer = CanPowerActivate;
+        powerCollector = collector;
     }
-    public void SetSpeedPowerActivated(bool _isSpeedPowerActivated)
+    public void SetSpeedPowerActivated(bool _isSpeedPowerActivated, IPlayerReconginaztion collector)
     {
         isSpeedPowerActivated = _isSpeedPowerActivated;
+        powerCollector = collector;
     }
-    public void SetSheildPowerActivated(bool _isSheildPowerActivated)
+    public void SetSheildPowerActivated(bool _isSheildPowerActivated, IPlayerReconginaztion collector)
     {
         isSheildActivated = _isSheildPowerActivated;
+        powerCollector = collector;
     }
 
     public void SetPowerPresentInTheGame(bool powerPresent)
