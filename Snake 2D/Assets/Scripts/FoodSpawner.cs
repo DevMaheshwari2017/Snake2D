@@ -11,6 +11,10 @@ public class FoodSpawner : MonoBehaviour
     private SnakeMovement snake;
     private player2Movment player2;
 
+    private void Awake()
+    {
+        //player2 = player2.GetComponent<player2Movment>();
+    }
     //Giving a area where our food can spawn, setting thr grid size
     public FoodSpawner(int width, int height)
     {

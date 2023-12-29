@@ -29,7 +29,7 @@ public class GameHandler : MonoBehaviour
         var scene = SceneManager.GetActiveScene();
         if(scene == SceneManager.GetSceneByBuildIndex(2))
         {
-            
+        player2.Setup(levelGrid);           
         }
         //getting the foodspawner ref
         snake.Setup(levelGrid);
