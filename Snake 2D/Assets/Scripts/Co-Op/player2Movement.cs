@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public class player2Movment : MonoBehaviour
+public class player2Movment : MonoBehaviour,IPlayerReconginaztion
 {
     private enum Direction
     {
@@ -84,7 +84,7 @@ public class player2Movment : MonoBehaviour
             {
                 Debug.Log("Score_PowerUp collected");
                 SoundManager.PlaySound(SoundManager.Sounds.Powerup);
-                powerUps.SetscoreMultiplayer(true);
+                powerUps.SetscoreMultiplayer(true,this);
                 Destroy(other.gameObject);
                 powerUps.SetPowerPresentInTheGame(false);
                 
@@ -94,7 +94,7 @@ public class player2Movment : MonoBehaviour
                 Debug.Log("Sheild_PowerUp collected");
                 SoundManager.PlaySound(SoundManager.Sounds.Powerup);
                 Destroy(other.gameObject);
-                powerUps.SetSheildPowerActivated(true);
+                powerUps.SetSheildPowerActivated(true,this);
                 powerUps.SetPowerPresentInTheGame(false);
 
             }
@@ -103,7 +103,7 @@ public class player2Movment : MonoBehaviour
                 Debug.Log("Speed_PowerUp collected");
                 SoundManager.PlaySound(SoundManager.Sounds.Powerup);
                 Destroy(other.gameObject);
-                powerUps.SetSpeedPowerActivated(true);
+                powerUps.SetSpeedPowerActivated(true,this);
                 powerUps.SetPowerPresentInTheGame(false);
             }
         }
@@ -145,41 +145,41 @@ public class player2Movment : MonoBehaviour
     {
         isProcessingInput = false;
     }
-    private void CheckingCollision()
-    {
-           List<Vector2Int> Player2FullPosition = GetFullSnakeBodyPositionList();
-           List<Vector2Int> Player1fullPosition = player1.GetFullSnakeBodyPositionList();
-        // Check for collision with player2's own body
-        for (int i = 1; i < Player2FullPosition.Count; i++) // Start from index 1 to exclude the head
-        {
-            if (gridPosition == Player2FullPosition[i])
-            {
-                if (powerUps.GetIsSheildPowerActivated() == false) 
-                { 
-                SoundManager.PlaySound(SoundManager.Sounds.SnakeDie);
-                state = State.Dead;
-                GameHandler.GameOver();
-                Debug.Log("game over");
+    //private void CheckingCollision()
+    //{
+    //       List<Vector2Int> Player2FullPosition = GetFullSnakeBodyPositionList();
+    //       List<Vector2Int> Player1fullPosition = player1.GetFullSnakeBodyPositionList();
+    //    // Check for collision with player2's own body
+    //    for (int i = 1; i < Player2FullPosition.Count; i++) // Start from index 1 to exclude the head
+    //    {
+    //        if (gridPosition == Player2FullPosition[i])
+    //        {
+    //            if (powerUps.GetIsSheildPowerActivated() == false) 
+    //            { 
+    //            SoundManager.PlaySound(SoundManager.Sounds.SnakeDie);
+    //            state = State.Dead;
+    //            GameHandler.GameOver();
+    //            Debug.Log("game over");
 
-                }
-            }
-        }
+    //            }
+    //        }
+    //    }
 
-        // Check for collision with player1's body parts
-        foreach (Vector2Int player2pos in Player2FullPosition)
-        {
-            if (Player1fullPosition.Contains(player2pos))
-            {
-                if (powerUps.GetIsSheildPowerActivated() == false)
-                {
-                    SoundManager.PlaySound(SoundManager.Sounds.SnakeDie);
-                    state = State.Dead;
-                    GameHandler.GameOver();
-                    Debug.Log("player 1 wins");
-                }
-            }
-        }
-    }
+    //    // Check for collision with player1's body parts
+    //    foreach (Vector2Int player2pos in Player2FullPosition)
+    //    {
+    //        if (Player1fullPosition.Contains(player2pos))
+    //        {
+    //            if (powerUps.GetIsSheildPowerActivated() == false)
+    //            {
+    //                SoundManager.PlaySound(SoundManager.Sounds.SnakeDie);
+    //                state = State.Dead;
+    //                GameHandler.GameOver();
+    //                Debug.Log("player 1 wins");
+    //            }
+    //        }
+    //    }
+    //}
     private void GridMoevement()
     {
         gridMoveTimer += Time.deltaTime;
@@ -220,7 +220,7 @@ public class player2Movment : MonoBehaviour
 
             Vector2Int gridpos = foodSpawner.ValidateGridPosition(gridPosition);
             gridPosition = gridpos;
-            CheckingCollision();
+            //CheckingCollision();
 
             foodSpawner.HasSnakeEatenFood();
             //Increase_DecreaseSnakeSize();
@@ -239,13 +239,11 @@ public class player2Movment : MonoBehaviour
 
         }        
     }
-    // not ref -> foodspawner
     public void IncreaseSnakeSize()
     {
             snakeSize++;
             SpawingSnakeBody();
     } 
-    //not ref -> foodpsawner
     public void DecreaseSnakeSize()
     {
 
@@ -282,7 +280,6 @@ public class player2Movment : MonoBehaviour
     }
 
     //Getter
-    //no ref should be 3 -> foodspawner - 53, powerUps - 50,
     public Vector2Int GetSnakeGridPosition()
     {
         return gridPosition;
@@ -290,6 +287,10 @@ public class player2Movment : MonoBehaviour
     public float GetSnakeSpeed()
     {
         return gridMoveTimerMax;
+    }
+    public int GetPlayerNumber()
+    {
+        return 2;
     }
     public List<Vector2Int> GetSnakeBodyPartGridPositionList()
     {

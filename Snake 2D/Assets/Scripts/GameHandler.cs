@@ -10,13 +10,17 @@ public class GameHandler : MonoBehaviour
     private player2Movment player2;
     private FoodSpawner levelGrid;
     private static GameHandler instance;
-    private static int score;
+    private static int player1Score;
+    private static int player2Score;
     [SerializeField]
-    private static int scoreValue = 10;
+    private static int player1ScoreValue = 10;   
+    [SerializeField]
+    private static int player2ScoreValue = 10;
     private void Awake()
     {
         instance = this;
-        score = 0;
+        player1Score = 0;
+        player2Score = 0;
     }
     private void Start()
     {
@@ -42,20 +46,27 @@ public class GameHandler : MonoBehaviour
             PauseGame();
         }
     }
-    public static int GetScore()
+
+    public static void AddToPlayer1Score()
     {
-        return score;
+        player1Score += player1ScoreValue;
     }
 
-    public static void AddScore()
+    public static void MinusPlayer1Score()
     {
-        score += scoreValue;
+        if (player1Score > 0)
+        player1Score -= player1ScoreValue;
+    } 
+
+    public static void AddToPlayer2Score()
+    {
+        player2Score += player2ScoreValue;
     }
 
-    public static void MinusScore()
+    public static void MinusPlayer2Score()
     {
-        if (score > 0)
-        score -= scoreValue;
+        if (player2Score > 0)
+        player2Score -= player2ScoreValue;
     }
     public static void GameOver()
     {
@@ -68,8 +79,22 @@ public class GameHandler : MonoBehaviour
         Time.timeScale = 0f;
     }
 
-    public static void SetScoreValue(int s)
+    //Getter
+    public static int GetPlayer2Score()
     {
-        scoreValue = s;
+        return player2Score;
+    }
+    public static int GetPlayer1Score()
+    {
+        return player1Score;
+    }
+    //Setter
+    public static void SetPlayer1ScoreValue(int s)
+    {
+        player1ScoreValue = s;
+    } 
+    public static void SetPlayer2ScoreValue(int s)
+    {
+        player2ScoreValue = s;
     }
 }

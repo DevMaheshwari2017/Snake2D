@@ -390,7 +390,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.05908203, y: -15.842102}
+  m_AnchoredPosition: {x: 0.05908203, y: -15.842041}
   m_SizeDelta: {x: -0.117, y: -115.943}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &351319814
@@ -1778,6 +1778,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   snake: {fileID: 1907649977}
+  player2: {fileID: 0}
 --- !u!114 &1479013962
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1790,7 +1791,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b31de4510df5fb94d8b0268dccc91368, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scoreText: {fileID: 467299952}
+  player1ScoreText: {fileID: 467299952}
+  player2ScoreText: {fileID: 0}
 --- !u!114 &1479013963
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2471,7 +2473,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameReload: {fileID: 1479013963}
   powerUps: {fileID: 1479013965}
+  player2: {fileID: 0}
   gridMoveTimerMax: 0.25
+  CoOp_scene: 0
 --- !u!212 &1907649978
 SpriteRenderer:
   m_ObjectHideFlags: 0
