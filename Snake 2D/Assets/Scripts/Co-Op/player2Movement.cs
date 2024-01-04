@@ -43,6 +43,10 @@ public class player2Movment : MonoBehaviour,IPlayerReconginaztion
     private List<SnakeBodyPart> snakeBodyPartList;
     private bool isProcessingInput = false;
 
+    [Header("For WebGl")]
+    [SerializeField]
+    private GameObject movementKeys;    
+
     private void Awake()
     {
         //default snake pos
@@ -64,9 +68,8 @@ public class player2Movment : MonoBehaviour,IPlayerReconginaztion
         if (state == State.Dead)      
             return;
 
-        MovementInput();
-        MovementInput();
         GridMoevement();
+        MovementInput();
     }
 
     //getting food spawner ref in game handler
@@ -114,24 +117,78 @@ public class player2Movment : MonoBehaviour,IPlayerReconginaztion
         if (isProcessingInput)
             return;
 
-        if (Input.GetKeyDown(KeyCode.W) && grideMoveDirection != Direction.Down)
+        if (Application.platform == RuntimePlatform.WindowsPlayer || Application.platform == RuntimePlatform.WindowsEditor)
+        {
+            movementKeys.SetActive(false);
+
+            if (Input.GetKeyDown(KeyCode.W) && grideMoveDirection != Direction.Down)
+            {
+                grideMoveDirection = Direction.Up;
+            }
+            else if (Input.GetKeyDown(KeyCode.S) && grideMoveDirection != Direction.Up)
+            {
+                grideMoveDirection = Direction.Down;
+            }
+            else if (Input.GetKeyDown(KeyCode.A) && grideMoveDirection != Direction.Right)
+            {
+                grideMoveDirection = Direction.Left;
+            }
+            else if (Input.GetKeyDown(KeyCode.D) && grideMoveDirection != Direction.Left)
+            {
+                grideMoveDirection = Direction.Right;
+            }
+        }
+        else
+        {
+            movementKeys.SetActive(true);
+        }
+    }
+
+    //Button input for WebGl Build
+    public void MoveUp()
+    {
+        if (isProcessingInput)
+            return;
+
+        if (grideMoveDirection != Direction.Down)
         {
             grideMoveDirection = Direction.Up;
             StartInputDelay();
         }
-        else if (Input.GetKeyDown(KeyCode.S) && grideMoveDirection != Direction.Up)
+    }
+
+    public void MoveDown()
+    {
+        if (isProcessingInput)
+            return;
+
+        if (grideMoveDirection != Direction.Up)
         {
             grideMoveDirection = Direction.Down;
             StartInputDelay();
         }
-        else if (Input.GetKeyDown(KeyCode.D) && grideMoveDirection != Direction.Left)
-        {
-            grideMoveDirection = Direction.Right;
-            StartInputDelay();
-        }
-        else if (Input.GetKeyDown(KeyCode.A) && grideMoveDirection != Direction.Right)
+    }
+
+    public void MoveLeft()
+    {
+        if (isProcessingInput)
+            return;
+
+        if (grideMoveDirection != Direction.Right)
         {
             grideMoveDirection = Direction.Left;
+            StartInputDelay();
+        }
+    }
+
+    public void MoveRight()
+    {
+        if (isProcessingInput)
+            return;
+
+        if (grideMoveDirection != Direction.Left)
+        {
+            grideMoveDirection = Direction.Right;
             StartInputDelay();
         }
     }
@@ -145,41 +202,7 @@ public class player2Movment : MonoBehaviour,IPlayerReconginaztion
     {
         isProcessingInput = false;
     }
-    //private void CheckingCollision()
-    //{
-    //       List<Vector2Int> Player2FullPosition = GetFullSnakeBodyPositionList();
-    //       List<Vector2Int> Player1fullPosition = player1.GetFullSnakeBodyPositionList();
-    //    // Check for collision with player2's own body
-    //    for (int i = 1; i < Player2FullPosition.Count; i++) // Start from index 1 to exclude the head
-    //    {
-    //        if (gridPosition == Player2FullPosition[i])
-    //        {
-    //            if (powerUps.GetIsSheildPowerActivated() == false) 
-    //            { 
-    //            SoundManager.PlaySound(SoundManager.Sounds.SnakeDie);
-    //            state = State.Dead;
-    //            GameHandler.GameOver();
-    //            Debug.Log("game over");
 
-    //            }
-    //        }
-    //    }
-
-    //    // Check for collision with player1's body parts
-    //    foreach (Vector2Int player2pos in Player2FullPosition)
-    //    {
-    //        if (Player1fullPosition.Contains(player2pos))
-    //        {
-    //            if (powerUps.GetIsSheildPowerActivated() == false)
-    //            {
-    //                SoundManager.PlaySound(SoundManager.Sounds.SnakeDie);
-    //                state = State.Dead;
-    //                GameHandler.GameOver();
-    //                Debug.Log("player 1 wins");
-    //            }
-    //        }
-    //    }
-    //}
     private void GridMoevement()
     {
         gridMoveTimer += Time.deltaTime;
@@ -308,12 +331,12 @@ public class player2Movment : MonoBehaviour,IPlayerReconginaztion
         gridMoveTimerMax = _speed;
     }
     //PowerUp -> 124
-    public bool SnakeIsAlive()
+    public void SnakeIsAlive()
     {
-        return state == State.Alive;
-    } public bool SnakeIsDead()
+        state = State.Alive;
+    } public void SnakeIsDead()
     {
-        return state == State.Dead;
+        state = State.Dead;
     }
 
     //returns the pos of snake head and body 

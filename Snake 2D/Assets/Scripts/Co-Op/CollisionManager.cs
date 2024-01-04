@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -20,6 +19,14 @@ public class CollisionManager : MonoBehaviour
     private GameObject WonByScore;
     [SerializeField]
     private Text WonByScore_Text;
+    [SerializeField]
+    private GameObject draw;
+    [SerializeField]
+    private Text draw_Text;
+    [SerializeField]
+    private GameObject player1Controls;    
+    [SerializeField]
+    private GameObject player2Controls;
 
     private void Awake()
     {
@@ -36,33 +43,45 @@ public class CollisionManager : MonoBehaviour
     private void CheckCollisions()
     {
         var scene = SceneManager.GetActiveScene();
-        List<Vector2Int> player1Positions = player1.GetFullSnakeBodyPositionList();
-        List<Vector2Int> player2Positions = player2.GetFullSnakeBodyPositionList();
 
         if (scene.name == "Co-Op")
         {
+            List<Vector2Int> player1Positions = player1.GetFullSnakeBodyPositionList();
+            List<Vector2Int> player2Positions = player2.GetFullSnakeBodyPositionList();
             bool player1Collision = player2Positions.Contains(player1.GetSnakeGridPosition());
             bool player2Collision = player1Positions.Contains(player2.GetSnakeGridPosition());
 
             if (player1Collision && player2Collision)
             {
+                player1.SnakeIsDead();
+                player2.SnakeIsDead();
+                player1Controls.SetActive(false);
+                player2Controls.SetActive(false);
                 // Both players collided with each other
                 Debug.LogWarning("Draw");
-                if(GameHandler.GetPlayer1Score() > GameHandler.GetPlayer2Score())
+                if (GameHandler.GetPlayer1Score() == GameHandler.GetPlayer2Score())
                 {
-                    int scoreDif = GameHandler.GetPlayer1Score() - GameHandler.GetPlayer2Score();
                     gameover_Panel.SetActive(true);
-                    WonByScore.SetActive(true);
-                    WonByScore_Text.text = "Player 1 won by " + scoreDif; 
+                    draw.SetActive(true);
+                    draw_Text.text = " It's a Draw...";
+                }
+
+                else if (GameHandler.GetPlayer1Score() > GameHandler.GetPlayer2Score())
+                {
+                   int scoreDif = GameHandler.GetPlayer1Score() - GameHandler.GetPlayer2Score();
+                   gameover_Panel.SetActive(true);
+                   WonByScore.SetActive(true);
+                   WonByScore_Text.text = "Player 1 won by " + scoreDif;
                 }
 
                 else if (GameHandler.GetPlayer2Score() > GameHandler.GetPlayer1Score())
                 {
-                    int scoreDif = GameHandler.GetPlayer2Score() - GameHandler.GetPlayer1Score();
-                    gameover_Panel.SetActive(true);
-                    WonByScore.SetActive(true);
-                    WonByScore_Text.text = "Player 2 won by " + scoreDif;
+                   int scoreDif = GameHandler.GetPlayer2Score() - GameHandler.GetPlayer1Score();
+                   gameover_Panel.SetActive(true);
+                   WonByScore.SetActive(true);
+                   WonByScore_Text.text = "Player 2 won by " + scoreDif;
                 }
+                
             }
             else if (player1Collision)
             {
@@ -71,6 +90,8 @@ public class CollisionManager : MonoBehaviour
                 player2_Won.SetActive(true);
                 player2.SnakeIsDead();
                 player1.SnakeIsDead();
+                player1Controls.SetActive(false);
+                player2Controls.SetActive(false);
                 Debug.Log("Player 2 wins");
                 // ...
             }
@@ -81,6 +102,8 @@ public class CollisionManager : MonoBehaviour
                 player1_Won.SetActive(true);
                 player2.SnakeIsDead();
                 player1.SnakeIsDead();
+                player1Controls.SetActive(false);
+                player2Controls.SetActive(false);
                 Debug.Log("Player 1 wins");
                 // ...
             }
@@ -97,6 +120,8 @@ public class CollisionManager : MonoBehaviour
                     player2_Won.SetActive(true);
                     player2.SnakeIsDead();
                     player1.SnakeIsDead();
+                    player1Controls.SetActive(false);
+                    player2Controls.SetActive(false);
                     return;
                 }
             }
@@ -112,6 +137,8 @@ public class CollisionManager : MonoBehaviour
                     player1_Won.SetActive(true);
                     player2.SnakeIsDead();
                     player1.SnakeIsDead();
+                    player1Controls.SetActive(false);
+                    player2Controls.SetActive(false);
                     return;
                 }
             }

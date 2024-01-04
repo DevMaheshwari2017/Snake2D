@@ -841,8 +841,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 5, y: 0}
-  m_SizeDelta: {x: 167.551, y: 131.12}
+  m_AnchoredPosition: {x: -0.1, y: 0.8}
+  m_SizeDelta: {x: 154.093, y: 132.65}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &525162756
 MonoBehaviour:
@@ -2471,11 +2471,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b86001994966e3a4abfa07d3f4f21330, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inputDelay: 0.001
+  mainScene: 1
   gameReload: {fileID: 1479013963}
   powerUps: {fileID: 1479013965}
   player2: {fileID: 0}
   gridMoveTimerMax: 0.25
-  CoOp_scene: 0
+  CoOp_scene: 2
+  movementKeys: {fileID: 0}
 --- !u!212 &1907649978
 SpriteRenderer:
   m_ObjectHideFlags: 0

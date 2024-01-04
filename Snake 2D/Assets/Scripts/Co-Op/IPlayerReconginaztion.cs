@@ -5,6 +5,6 @@ using UnityEngine;
 public interface IPlayerReconginaztion
 {
     void SetSnakeSpeed(float speed);
-    bool SnakeIsAlive();
+    void SnakeIsAlive();
     int GetPlayerNumber();
 }

@@ -17,6 +17,11 @@ public class SnakeMovement : MonoBehaviour, IPlayerReconginaztion
         Alive,
         Dead
     }
+    [SerializeField]
+    private float inputDelay;
+    [SerializeField]
+    private int mainScene;
+
     [Header("ScriptsRefrences")]
     [SerializeField]
     GameReload gameReload;
@@ -47,6 +52,10 @@ public class SnakeMovement : MonoBehaviour, IPlayerReconginaztion
     [SerializeField]
     private int CoOp_scene;
 
+    [Header("For WebGl")]
+    [SerializeField]
+    private GameObject movementKeys;
+
     private void Awake()
     {
         //default snake pos
@@ -68,7 +77,6 @@ public class SnakeMovement : MonoBehaviour, IPlayerReconginaztion
         if (state == State.Dead)      
             return;
 
-        MovementInput();
         MovementInput();
         GridMoevement();
     }
@@ -112,37 +120,130 @@ public class SnakeMovement : MonoBehaviour, IPlayerReconginaztion
             }
         }
     }
-    //Taking keyboard input 
+    //Taking keyboard input For the singlePlayer game 
     private void MovementInput()
+    {
+        var scene = SceneManager.GetActiveScene();
+        if (isProcessingInput)
+            return;
+
+        if (Application.platform == RuntimePlatform.WindowsPlayer || Application.platform == RuntimePlatform.WindowsEditor)
+        {
+            if(scene == SceneManager.GetSceneByBuildIndex(CoOp_scene))
+            {
+            movementKeys.SetActive(false);
+            }
+            if (Input.GetKeyDown(KeyCode.UpArrow) && grideMoveDirection != Direction.Down)
+            {
+                grideMoveDirection = Direction.Up;
+            }
+            else if (Input.GetKeyDown(KeyCode.DownArrow) && grideMoveDirection != Direction.Up)
+            {
+                grideMoveDirection = Direction.Down;
+            }
+            else if (Input.GetKeyDown(KeyCode.LeftArrow) && grideMoveDirection != Direction.Right)
+            {
+                grideMoveDirection = Direction.Left;
+            }
+            else if (Input.GetKeyDown(KeyCode.RightArrow) && grideMoveDirection != Direction.Left)
+            {
+                grideMoveDirection = Direction.Right;
+            }
+        }
+        else if (Application.platform == RuntimePlatform.WebGLPlayer)
+        {
+            if (scene == SceneManager.GetSceneByBuildIndex(CoOp_scene))
+            {
+                movementKeys.SetActive(true);
+            }
+            else if (scene == SceneManager.GetSceneByBuildIndex(mainScene))
+            {
+                if (Input.GetMouseButtonDown(0))
+                {
+                    Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                    Vector2 direction = (mousePos - (Vector2)transform.position).normalized;
+
+                    if (Mathf.Abs(direction.x) > Mathf.Abs(direction.y))
+                    {
+                        if (direction.x > 0 && grideMoveDirection != Direction.Left)
+                        {
+                            grideMoveDirection = Direction.Right;
+                        }
+                        else if (direction.x < 0 && grideMoveDirection != Direction.Right)
+                        {
+                            grideMoveDirection = Direction.Left;
+                        }
+                    }
+                    else
+                    {
+                        if (direction.y > 0 && grideMoveDirection != Direction.Down)
+                        {
+                            grideMoveDirection = Direction.Up;
+                        }
+                        else if (direction.y < 0 && grideMoveDirection != Direction.Up)
+                        {
+                            grideMoveDirection = Direction.Down;
+                        }
+                    }
+
+                }
+            }
+        }       
+                StartInputDelay();
+    }
+
+    // For Co-Op using buttons in the Co-Op instead of mouse or touch input for the WebGl 
+    public void MoveUp()
     {
         if (isProcessingInput)
             return;
 
-        if (Input.GetKeyDown(KeyCode.UpArrow) && grideMoveDirection != Direction.Down)
+        if (grideMoveDirection != Direction.Down)
         {
             grideMoveDirection = Direction.Up;
             StartInputDelay();
         }
-        else if (Input.GetKeyDown(KeyCode.DownArrow) && grideMoveDirection != Direction.Up)
+    }
+
+    public void MoveDown()
+    {
+        if (isProcessingInput)
+            return;
+
+        if (grideMoveDirection != Direction.Up)
         {
             grideMoveDirection = Direction.Down;
             StartInputDelay();
         }
-        else if (Input.GetKeyDown(KeyCode.RightArrow) && grideMoveDirection != Direction.Left)
-        {
-            grideMoveDirection = Direction.Right;
-            StartInputDelay();
-        }
-        else if (Input.GetKeyDown(KeyCode.LeftArrow) && grideMoveDirection != Direction.Right)
+    }
+
+    public void MoveLeft()
+    {
+        if (isProcessingInput)
+            return;
+
+        if (grideMoveDirection != Direction.Right)
         {
             grideMoveDirection = Direction.Left;
+            StartInputDelay();
+        }
+    }
+
+    public void MoveRight()
+    {
+        if (isProcessingInput)
+            return;
+
+        if (grideMoveDirection != Direction.Left)
+        {
+            grideMoveDirection = Direction.Right;
             StartInputDelay();
         }
     }
     private void StartInputDelay()
     {
         isProcessingInput = true;
-        Invoke("StopInputDelay", 0.1f); // the delay so player can't continously press keys and change dierction 
+        Invoke("StopInputDelay", inputDelay); // the delay so player can't continously press keys and change dierction 
     }
 
     private void StopInputDelay()
@@ -171,24 +272,6 @@ public class SnakeMovement : MonoBehaviour, IPlayerReconginaztion
                 }
             }
         }
-        //if (scene == SceneManager.GetSceneByBuildIndex(CoOp_scene))
-        //{
-        //List<Vector2Int> Player2FullPosition = player2.GetFullSnakeBodyPositionList();
-        //    // Check for collision with player2's body parts
-        //    foreach (Vector2Int player1pos in Player1FullPosition)
-        //    {
-        //        if (Player2FullPosition.Contains(player1pos))
-        //        {
-        //            if (powerUps.GetIsSheildPowerActivated() == false)
-        //            {
-        //                SoundManager.PlaySound(SoundManager.Sounds.SnakeDie);
-        //                state = State.Dead;
-        //                GameHandler.GameOver();
-        //                Debug.Log("Player 2 wins");
-        //            }
-        //        }
-        //    }
-        //}
     }
     private void GridMoevement()
     {
@@ -306,12 +389,12 @@ public class SnakeMovement : MonoBehaviour, IPlayerReconginaztion
     {
         gridMoveTimerMax = _speed;
     }
-    public bool SnakeIsAlive()
+    public void SnakeIsAlive()
     {
-        return state == State.Alive;
-    } public bool SnakeIsDead()
+        state = State.Alive;
+    } public void SnakeIsDead()
     {
-        return state == State.Dead;
+        state = State.Dead;
     }
 
     //returns the pos of snake head and body 

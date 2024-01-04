@@ -39,8 +39,9 @@ public class FoodSpawner : MonoBehaviour
         do
         {
             foodGridPos = new Vector2Int(Random.Range(0, width), Random.Range(0, height));
-        } while (snake.GetFullSnakeBodyPositionList().IndexOf(foodGridPos) != -1 || 
-        (scene.name == "Co-Op" && player2.GetFullSnakeBodyPositionList().IndexOf(foodGridPos) != -1)); // checking if snake + body parts pos is same as food pos if yes genrate new food at other ramdom pos
+        } while (snake.GetFullSnakeBodyPositionList().IndexOf(foodGridPos) != -1 || // checking if snake + body parts pos is same as food pos if yes genrate new food at other ramdom pos
+        (scene.name == "Co-Op" && player2.GetFullSnakeBodyPositionList().IndexOf(foodGridPos) != -1) || // checking if the scene is Co-Op then food should be spawned upon player2 too
+        foods.Any(food => food.GridPos == foodGridPos));
 
         GameObject foodGameobject = new GameObject("Food", typeof(SpriteRenderer));
         foodGameobject.GetComponent<SpriteRenderer>().sprite = foodSprite;
