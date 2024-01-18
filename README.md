@@ -3,4 +3,18 @@ A classic 2d snake game but with some unique powerUps and different foods which 
 To play the Snake2D on Web: - https://outscal.com/devmaheswari2017/game/play-snake-2d-game
 
 Watch Gameplay video here :-
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 [![Snake2D](https://img.youtube.com/vi/2Y5wDuzKj8M/0.jpg)](https://www.youtube.com/watch?v=2Y5wDuzKj8M)
