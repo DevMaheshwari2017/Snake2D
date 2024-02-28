@@ -20,17 +20,25 @@ public class CollisionManager : MonoBehaviour
     private GameObject WonByScore;
     [SerializeField]
     private Text WonByScore_Text;
+    [SerializeField]
+    private GameObject drawPanel;
 
     private void Awake()
     {
+        Time.timeScale = 1;
         WonByScore.SetActive(false);
         gameover_Panel.SetActive(false);
         player1_Won.SetActive(false);
         player2_Won.SetActive(false);
+        drawPanel.SetActive(false);
     }
     private void Update()
     {
         CheckCollisions();
+    }
+
+    private void PausingGame() {
+        Time.timeScale = 0;
     }
 
     private void CheckCollisions()
@@ -47,12 +55,18 @@ public class CollisionManager : MonoBehaviour
             if (player1Collision && player2Collision)
             {
                 // Both players collided with each other
-                Debug.LogWarning("Draw");
-                if(GameHandler.GetPlayer1Score() > GameHandler.GetPlayer2Score())
+                if (GameHandler.GetPlayer1Score() == GameHandler.GetPlayer2Score())
+                {
+                    PausingGame();
+                    drawPanel.SetActive(true);
+                    Debug.LogWarning("Draw");
+                }
+                else if(GameHandler.GetPlayer1Score() > GameHandler.GetPlayer2Score())
                 {
                     int scoreDif = GameHandler.GetPlayer1Score() - GameHandler.GetPlayer2Score();
                     gameover_Panel.SetActive(true);
                     WonByScore.SetActive(true);
+                    PausingGame();
                     WonByScore_Text.text = "Player 1 won by " + scoreDif; 
                 }
 
@@ -61,6 +75,7 @@ public class CollisionManager : MonoBehaviour
                     int scoreDif = GameHandler.GetPlayer2Score() - GameHandler.GetPlayer1Score();
                     gameover_Panel.SetActive(true);
                     WonByScore.SetActive(true);
+                    PausingGame();
                     WonByScore_Text.text = "Player 2 won by " + scoreDif;
                 }
             }
@@ -69,8 +84,7 @@ public class CollisionManager : MonoBehaviour
                 // Player 1 collided with Player 2's body, so Player 1 loses
                 gameover_Panel.SetActive(true);
                 player2_Won.SetActive(true);
-                player2.SnakeIsDead();
-                player1.SnakeIsDead();
+                PausingGame();
                 Debug.Log("Player 2 wins");
                 // ...
             }
@@ -79,8 +93,7 @@ public class CollisionManager : MonoBehaviour
                 // Player 2 collided with Player 1's body, so Player 2 loses
                 gameover_Panel.SetActive(true);
                 player1_Won.SetActive(true);
-                player2.SnakeIsDead();
-                player1.SnakeIsDead();
+                PausingGame();
                 Debug.Log("Player 1 wins");
                 // ...
             }
@@ -95,8 +108,7 @@ public class CollisionManager : MonoBehaviour
                     // Handle player 1 self-collision
                     gameover_Panel.SetActive(true);
                     player2_Won.SetActive(true);
-                    player2.SnakeIsDead();
-                    player1.SnakeIsDead();
+                    PausingGame();
                     return;
                 }
             }
@@ -110,8 +122,7 @@ public class CollisionManager : MonoBehaviour
                     // Handle player 2 self-collision
                     gameover_Panel.SetActive(true);
                     player1_Won.SetActive(true);
-                    player2.SnakeIsDead();
-                    player1.SnakeIsDead();
+                    PausingGame();
                     return;
                 }
             }

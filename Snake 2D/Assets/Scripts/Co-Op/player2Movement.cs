@@ -145,41 +145,6 @@ public class player2Movment : MonoBehaviour,IPlayerReconginaztion
     {
         isProcessingInput = false;
     }
-    //private void CheckingCollision()
-    //{
-    //       List<Vector2Int> Player2FullPosition = GetFullSnakeBodyPositionList();
-    //       List<Vector2Int> Player1fullPosition = player1.GetFullSnakeBodyPositionList();
-    //    // Check for collision with player2's own body
-    //    for (int i = 1; i < Player2FullPosition.Count; i++) // Start from index 1 to exclude the head
-    //    {
-    //        if (gridPosition == Player2FullPosition[i])
-    //        {
-    //            if (powerUps.GetIsSheildPowerActivated() == false) 
-    //            { 
-    //            SoundManager.PlaySound(SoundManager.Sounds.SnakeDie);
-    //            state = State.Dead;
-    //            GameHandler.GameOver();
-    //            Debug.Log("game over");
-
-    //            }
-    //        }
-    //    }
-
-    //    // Check for collision with player1's body parts
-    //    foreach (Vector2Int player2pos in Player2FullPosition)
-    //    {
-    //        if (Player1fullPosition.Contains(player2pos))
-    //        {
-    //            if (powerUps.GetIsSheildPowerActivated() == false)
-    //            {
-    //                SoundManager.PlaySound(SoundManager.Sounds.SnakeDie);
-    //                state = State.Dead;
-    //                GameHandler.GameOver();
-    //                Debug.Log("player 1 wins");
-    //            }
-    //        }
-    //    }
-    //}
     private void GridMoevement()
     {
         gridMoveTimer += Time.deltaTime;
@@ -292,6 +257,7 @@ public class player2Movment : MonoBehaviour,IPlayerReconginaztion
     {
         return 2;
     }
+
     public List<Vector2Int> GetSnakeBodyPartGridPositionList()
     {
         List<Vector2Int> gridPositionList = new List<Vector2Int>();
@@ -302,22 +268,16 @@ public class player2Movment : MonoBehaviour,IPlayerReconginaztion
         return gridPositionList;
     }
     //setter
-    // ref needed -> Power up -100,106
     public void SetSnakeSpeed(float _speed)
     {
         gridMoveTimerMax = _speed;
     }
-    //PowerUp -> 124
     public bool SnakeIsAlive()
     {
         return state == State.Alive;
-    } public bool SnakeIsDead()
-    {
-        return state == State.Dead;
     }
 
     //returns the pos of snake head and body 
-    //Foodspawner 41, powerup 50
     public List<Vector2Int> GetFullSnakeBodyPositionList()
     {
         List<Vector2Int> gridPositionList = new List<Vector2Int>() { gridPosition };

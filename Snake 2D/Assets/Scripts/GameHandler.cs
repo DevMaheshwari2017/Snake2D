@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 public class GameHandler : MonoBehaviour
@@ -42,7 +40,7 @@ public class GameHandler : MonoBehaviour
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
-        {
+        {                    
             PauseGame();
         }
     }
@@ -75,8 +73,7 @@ public class GameHandler : MonoBehaviour
 
     public static void PauseGame()
     {
-        PauseWindow.ShowPausescreeen();
-        Time.timeScale = 0f;
+        PauseWindow.ShowPausescreeen(); 
     }
 
     //Getter

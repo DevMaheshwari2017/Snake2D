@@ -160,7 +160,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 6.999878, y: -14.511047}
+  m_AnchoredPosition: {x: 6.999878, y: -14.511139}
   m_SizeDelta: {x: -1466.0894, y: -814.888}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &43544256
@@ -1658,6 +1658,14 @@ MonoBehaviour:
   soundsClipArray:
   - sound: 4
     audioClip: {fileID: 8300000, guid: 82b1769f7e5647f46873afd7fdc8752b, type: 3}
+  - sound: 1
+    audioClip: {fileID: 8300000, guid: cd675a78655941d4293421cf69d3448a, type: 3}
+  - sound: 2
+    audioClip: {fileID: 8300000, guid: 0263e43c18812ff43b5e2ecba602ebf4, type: 3}
+  - sound: 3
+    audioClip: {fileID: 8300000, guid: 0c90475ecb49489429c41bc8b1d9aa1f, type: 3}
+  - sound: 5
+    audioClip: {fileID: 8300000, guid: 82b1769f7e5647f46873afd7fdc8752b, type: 3}
 --- !u!1 &1579258077
 GameObject:
   m_ObjectHideFlags: 0
@@ -1784,18 +1792,18 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 8a2b9e2a607dd2143b58c44bc32410b4, type: 3}
+    m_Font: {fileID: 12800000, guid: 997a43b767814dd0a7642ec9b78cba41, type: 3}
     m_FontSize: 112
     m_FontStyle: 1
     m_BestFit: 0
     m_MinSize: 1
     m_MaxSize: 112
     m_Alignment: 4
-    m_AlignByGeometry: 0
+    m_AlignByGeometry: 1
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
-    m_LineSpacing: 0.5
+    m_LineSpacing: 0.38
   m_Text: 'Snake 2d
 
 '

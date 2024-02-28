@@ -171,24 +171,6 @@ public class SnakeMovement : MonoBehaviour, IPlayerReconginaztion
                 }
             }
         }
-        //if (scene == SceneManager.GetSceneByBuildIndex(CoOp_scene))
-        //{
-        //List<Vector2Int> Player2FullPosition = player2.GetFullSnakeBodyPositionList();
-        //    // Check for collision with player2's body parts
-        //    foreach (Vector2Int player1pos in Player1FullPosition)
-        //    {
-        //        if (Player2FullPosition.Contains(player1pos))
-        //        {
-        //            if (powerUps.GetIsSheildPowerActivated() == false)
-        //            {
-        //                SoundManager.PlaySound(SoundManager.Sounds.SnakeDie);
-        //                state = State.Dead;
-        //                GameHandler.GameOver();
-        //                Debug.Log("Player 2 wins");
-        //            }
-        //        }
-        //    }
-        //}
     }
     private void GridMoevement()
     {

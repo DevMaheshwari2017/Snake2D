@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -16,7 +14,8 @@ public class GameReload : MonoBehaviour
         instance = this;
         gameover_Panel.SetActive(false);
     }
-    public void LoadSinglepLayerMainLevel()
+
+    public void LoadMainLevel()
    {
         SoundManager.PlaySound(SoundManager.Sounds.ButtonClicked);
         SceneManager.LoadScene(mainLevel);
