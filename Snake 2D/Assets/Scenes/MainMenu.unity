@@ -160,7 +160,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 6.999817, y: -14.511078}
+  m_AnchoredPosition: {x: 6.999878, y: -14.511139}
   m_SizeDelta: {x: -1466.0894, y: -814.888}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &43544256
@@ -896,7 +896,6 @@ GameObject:
   m_Component:
   - component: {fileID: 704551096}
   - component: {fileID: 704551098}
-  - component: {fileID: 704551097}
   m_Layer: 0
   m_Name: Canvas_Camera
   m_TagString: Untagged
@@ -919,14 +918,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 373302648}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!81 &704551097
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 704551095}
-  m_Enabled: 1
 --- !u!20 &704551098
 Camera:
   m_ObjectHideFlags: 0
@@ -1109,7 +1100,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 6.999817, y: -188.137}
+  m_AnchoredPosition: {x: 6.999878, y: -188.13705}
   m_SizeDelta: {x: -1466.0894, y: -814.888}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &895825900
@@ -1593,6 +1584,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1524903556}
   - {fileID: 963194228}
   - {fileID: 705507995}
   - {fileID: 1579258078}
@@ -1613,6 +1605,67 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   coOp_Level: 2
   mainLevel: 1
+--- !u!1 &1524903555
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1524903556}
+  - component: {fileID: 1524903557}
+  m_Layer: 0
+  m_Name: GameAssest
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1524903556
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1524903555}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 842.0835, y: 1070.3704, z: 100}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1479013960}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1524903557
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1524903555}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56578dba16211724aa01ddd526aee0fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  snakeHeadSprite: {fileID: 0}
+  gainerFoodSprite: {fileID: 0}
+  burnerFoodSprite: {fileID: 0}
+  snakeBodySprite: {fileID: 0}
+  snakeTailSprite: {fileID: 0}
+  powerUps: []
+  soundsClipArray:
+  - sound: 4
+    audioClip: {fileID: 8300000, guid: 82b1769f7e5647f46873afd7fdc8752b, type: 3}
+  - sound: 1
+    audioClip: {fileID: 8300000, guid: cd675a78655941d4293421cf69d3448a, type: 3}
+  - sound: 2
+    audioClip: {fileID: 8300000, guid: 0263e43c18812ff43b5e2ecba602ebf4, type: 3}
+  - sound: 3
+    audioClip: {fileID: 8300000, guid: 0c90475ecb49489429c41bc8b1d9aa1f, type: 3}
+  - sound: 5
+    audioClip: {fileID: 8300000, guid: 82b1769f7e5647f46873afd7fdc8752b, type: 3}
 --- !u!1 &1579258077
 GameObject:
   m_ObjectHideFlags: 0
@@ -1739,18 +1792,18 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 8a2b9e2a607dd2143b58c44bc32410b4, type: 3}
+    m_Font: {fileID: 12800000, guid: 997a43b767814dd0a7642ec9b78cba41, type: 3}
     m_FontSize: 112
     m_FontStyle: 1
     m_BestFit: 0
     m_MinSize: 1
     m_MaxSize: 112
     m_Alignment: 4
-    m_AlignByGeometry: 0
+    m_AlignByGeometry: 1
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
-    m_LineSpacing: 0.5
+    m_LineSpacing: 0.38
   m_Text: 'Snake 2d
 
 '

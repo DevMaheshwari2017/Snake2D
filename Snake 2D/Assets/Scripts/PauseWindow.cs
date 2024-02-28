@@ -1,7 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class PauseWindow : MonoBehaviour
@@ -40,7 +38,9 @@ public class PauseWindow : MonoBehaviour
 
     private void show()
     {
-        pausedScreen.SetActive(true);
+        bool isPaused = !pausedScreen.activeSelf;
+        Time.timeScale = isPaused ? 0f : 1f;
+        pausedScreen.SetActive(isPaused);
     }
 
     public static void ShowPausescreeen()
