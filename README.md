@@ -32,19 +32,3 @@ Snake Co-Op is a modern take on the classic snake game, enriched with new featur
 
 [![Snake Co-Op Gameplay Video](https://img.youtube.com/vi/2Y5wDuzKj8M/0.jpg)](https://www.youtube.com/watch?v=2Y5wDuzKj8M)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-[![Snake2D](https://img.youtube.com/vi/2Y5wDuzKj8M/0.jpg)](https://www.youtube.com/watch?v=2Y5wDuzKj8M)
