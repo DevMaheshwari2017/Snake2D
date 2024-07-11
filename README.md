@@ -27,9 +27,8 @@ Snake Co-Op is a modern take on the classic snake game, enriched with new featur
 
 ## Preview
 
-### Web-To-Play:-
+### [Web-To-Play](https://outscal.com/devmaheswari2017/game/play-snake-2d-game)
 
-https://outscal.com/devmaheswari2017/game/play-snake-2d-game
 
 ## Watch Gameplay video here :- 
 
