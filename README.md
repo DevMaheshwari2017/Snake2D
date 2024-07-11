@@ -25,10 +25,13 @@ Developing Snake Co-Op was both a challenging and enjoyable experience. Implemen
 
 Snake Co-Op is a modern take on the classic snake game, enriched with new features and a competitive local Co-Op mode. The project showcases the effective use of the Singleton design pattern and highlights the developer's ability to tackle new challenges and learn from them.
 
-**Play Snake Co-Op on Web:-** https://outscal.com/devmaheswari2017/game/play-snake-2d-game
+## Preview
+
+### Web-To-Play:-
+
+https://outscal.com/devmaheswari2017/game/play-snake-2d-game
 
 ## Watch Gameplay video here :- 
-
 
 [![Snake Co-Op Gameplay Video](https://img.youtube.com/vi/2Y5wDuzKj8M/0.jpg)](https://www.youtube.com/watch?v=2Y5wDuzKj8M)
 
